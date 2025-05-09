@@ -6,16 +6,966 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1018</width>
-    <height>1084</height>
+    <width>1061</width>
+    <height>1095</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Microsoft YaHei UI</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
   <property name="windowTitle">
-   <string>EIST - beta</string>
+   <string>DualZense - Dual-frequency impedance sensing for precise, intuitive temperature evaluation</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>50</width>
+    <height>50</height>
+   </size>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+    <item row="2" column="0">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="font">
+          <font>
+           <family>Microsoft YaHei UI</family>
+           <pointsize>13</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>EIS Data Processing</string>
+         </property>
+         <property name="margin">
+          <number>5</number>
+         </property>
+         <property name="indent">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="font">
+          <font>
+           <family>Microsoft YaHei UI</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab">
+          <property name="font">
+           <font>
+            <family>Microsoft YaHei UI</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <attribute name="title">
+           <string>EIS Data Preview</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <layout class="QGridLayout" name="gridLayout_3">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>5</number>
+             </property>
+             <property name="rightMargin">
+              <number>11</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>12</number>
+             </property>
+             <item row="1" column="0" colspan="3">
+              <widget class="QWidget" name="previewer" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>400</width>
+                 <height>400</height>
+                </size>
+               </property>
+               <property name="baseSize">
+                <size>
+                 <width>600</width>
+                 <height>600</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="btn_plot_EIS">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(0, 170, 255);
+color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>Plot original EIS</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="preview_type">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Nyquist (Z' vs. -Z'')</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Bode (Freq vs. |Z|)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Bode (Freq vs. Phase)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Bode (Freq vs. Z')</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Bode (Freq vs. -Z'')</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>Thermal Sensitivity Analysis</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_plot_map">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 170, 255);
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Plot sensitivity map</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="cbx_map_type">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <item>
+              <property name="text">
+               <string>using Z'</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>using Z''</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>using |Z|</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>using Phase</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QComboBox" name="cbx_freq_gap">
+             <item>
+              <property name="text">
+               <string>select frequency gap</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>f-3.16*f</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>f-5.01*f</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>f-10*f</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>single frequency</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="3">
+            <widget class="QWidget" name="sensitivity" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>500</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QCheckBox" name="is_show_contour">
+             <property name="text">
+              <string>show contour label</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="cbx_map_func">
+             <item>
+              <property name="text">
+               <string>heatmap</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>contourf</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="btn_export_map">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgba(0, 170, 255, 128);
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Export plot data</string>
+             </property>
+             <property name="default">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_3">
+          <attribute name="title">
+           <string>Dual-frequency Fitting</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0" colspan="2">
+            <widget class="QPushButton" name="btn_fit">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 170, 255);
+font: 11pt &quot;Microsoft YaHei UI&quot;;
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Fitting Sensitivity</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2" colspan="2">
+            <widget class="QPushButton" name="btn_export_fit">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgba(0, 170, 255, 128);
+font: 11pt &quot;Microsoft YaHei UI&quot;;
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Export Fitting Data</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QCheckBox" name="show_formula">
+             <property name="text">
+              <string>show formula</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QCheckBox" name="show_pred_interval">
+             <property name="text">
+              <string>show predict interval</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" alignment="Qt::AlignRight">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>min T: </string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="min_fit_T">
+             <property name="maximum">
+              <double>999.990000000000009</double>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2" alignment="Qt::AlignRight">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>max T: </string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QDoubleSpinBox" name="max_fit_T">
+             <property name="decimals">
+              <number>2</number>
+             </property>
+             <property name="maximum">
+              <double>999.990000000000009</double>
+             </property>
+             <property name="value">
+              <double>99.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QComboBox" name="cbx_fit_type">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <item>
+              <property name="text">
+               <string>using Z'</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>using Z''</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>using |Z|</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>using Phase</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QComboBox" name="cbx_fit_base_f">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <item>
+              <property name="text">
+               <string>select base frequency</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>100Hz</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>50Hz</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>10Hz</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1Hz</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="6">
+            <widget class="QComboBox" name="cbx_fit_freq_gap">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <item>
+              <property name="text">
+               <string>select frequency gap</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>f-3.16*f</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>f-5.01*f</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>f-10*f</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="7">
+            <widget class="QWidget" name="fitting" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>500</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QCheckBox" name="cbx_fit_act_energy">
+             <property name="text">
+              <string>fit activation energy</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_4">
+          <attribute name="title">
+           <string>Temperature Evaluation</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Fit function</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>A = </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="val_A">
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="minimum">
+                <double>-9999999999.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>9999999999.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>48750.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>B = </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="val_B">
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="minimum">
+                <double>-9999999999.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>9999999999.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>2825.373999999999796</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>C = </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="val_C">
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="minimum">
+                <double>-9999999999.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>9999999999.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>-141.822499999999991</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_import_fit_param">
+               <property name="text">
+                <string>Import</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Y = A / T^2 + B / T + C   </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_8">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>11</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Model setting</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="bottomMargin">
+              <number>5</number>
+             </property>
+             <item>
+              <widget class="QComboBox" name="cbx_analyze_type">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <item>
+                <property name="text">
+                 <string>using Z'</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>using Z''</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>using |Z|</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>using Phase</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cbx_analyze_f0">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <item>
+                <property name="text">
+                 <string>select base frequency</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>100Hz</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>50Hz</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>10Hz</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>1Hz</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cbx_analyze_freq_gap">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <item>
+                <property name="text">
+                 <string>select frequency gap</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>f-3.16*f</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>f-5.01*f</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>f-10*f</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <property name="topMargin">
+              <number>5</number>
+             </property>
+             <property name="bottomMargin">
+              <number>5</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>12</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="btn_add_analyze">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="btn_clear_analyze">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Clear</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="btn_del_analyze">
+               <property name="font">
+                <font>
+                 <family>Microsoft YaHei UI</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Delete Selected Row</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="3">
+              <widget class="QTableWidget" name="table_analyze">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="inputMethodHints">
+                <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+               </property>
+               <column>
+                <property name="text">
+                 <string>EIS data</string>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Predicted T (℃)</string>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="background">
+                 <color>
+                  <red>0</red>
+                  <green>255</green>
+                  <blue>255</blue>
+                 </color>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Ref. ΔRe</string>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+                <property name="background">
+                 <color>
+                  <red>193</red>
+                  <green>193</green>
+                  <blue>193</blue>
+                 </color>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Ref. T (℃)</string>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Microsoft YaHei UI</family>
+                  <pointsize>11</pointsize>
+                  <underline>false</underline>
+                  <kerning>true</kerning>
+                 </font>
+                </property>
+                <property name="textAlignment">
+                 <set>AlignCenter</set>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="btn_run_analyze">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(0, 170, 255);
+font: 11pt &quot;Microsoft YaHei UI&quot;;
+color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>Run</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_export_analyze">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgba(0, 170, 255, 128);
+font: 11pt &quot;Microsoft YaHei UI&quot;;
+color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>Export</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_set_default_ref">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Set 1st row as default reference</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>421</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="2">
      <widget class="QFrame" name="frame_2">
       <property name="font">
        <font>
@@ -33,28 +983,46 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
        <item>
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
            <family>Microsoft YaHei UI</family>
-           <pointsize>8</pointsize>
+           <pointsize>13</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="text">
-          <string>&gt;&gt;&gt; EIS Data Setting</string>
+          <string>EIS Data Setting</string>
+         </property>
+         <property name="margin">
+          <number>5</number>
          </property>
         </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
          <item>
           <widget class="QPushButton" name="btn_add_data">
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(0, 170, 255);
+color: rgb(255, 255, 255);</string>
            </property>
            <property name="text">
             <string>Add</string>
@@ -66,7 +1034,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="text">
@@ -79,7 +1047,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="text">
@@ -95,8 +1063,12 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgba(0, 170, 255, 128);
+color: rgb(255, 255, 255);</string>
            </property>
            <property name="text">
             <string>Export pkl</string>
@@ -107,12 +1079,18 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
          <item>
           <widget class="QLabel" name="label_2">
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="text">
@@ -125,7 +1103,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="minimum">
@@ -141,7 +1119,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="text">
@@ -154,7 +1132,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="value">
@@ -167,7 +1145,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="text">
@@ -180,7 +1158,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="value">
@@ -193,7 +1171,7 @@
            <property name="font">
             <font>
              <family>Microsoft YaHei UI</family>
-             <pointsize>8</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="text">
@@ -206,13 +1184,26 @@
          </item>
          <item alignment="Qt::AlignRight">
           <widget class="QLabel" name="label_13">
+           <property name="font">
+            <font>
+             <family>Microsoft YaHei UI</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>skip = </string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="skip_rows"/>
+          <widget class="QSpinBox" name="skip_rows">
+           <property name="font">
+            <font>
+             <family>Microsoft YaHei UI</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -221,7 +1212,7 @@
          <property name="font">
           <font>
            <family>Microsoft YaHei UI</family>
-           <pointsize>8</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="sortingEnabled">
@@ -243,7 +1234,7 @@
           <property name="font">
            <font>
             <family>Microsoft YaHei UI</family>
-            <pointsize>8</pointsize>
+            <pointsize>11</pointsize>
            </font>
           </property>
           <property name="textAlignment">
@@ -257,794 +1248,29 @@
           <property name="font">
            <font>
             <family>Microsoft YaHei UI</family>
-            <pointsize>8</pointsize>
+            <pointsize>11</pointsize>
            </font>
+          </property>
+          <property name="textAlignment">
+           <set>AlignCenter</set>
           </property>
          </column>
          <column>
           <property name="text">
            <string>Info</string>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="textAlignment">
+           <set>AlignCenter</set>
+          </property>
          </column>
         </widget>
        </item>
       </layout>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="font">
-       <font>
-        <family>Microsoft YaHei UI</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="tab">
-       <property name="font">
-        <font>
-         <family>Microsoft YaHei UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <attribute name="title">
-        <string>EIS Data</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="btn_plot_EIS">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Microsoft YaHei UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Plot original EIS</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="0" colspan="3">
-           <widget class="QWidget" name="previewer" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>400</width>
-              <height>400</height>
-             </size>
-            </property>
-            <property name="baseSize">
-             <size>
-              <width>600</width>
-              <height>600</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="preview_type">
-            <item>
-             <property name="text">
-              <string>Nyquist (Z' vs. -Z'')</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bode (Freq vs. |Z|)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bode (Freq vs. Phase)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bode (Freq vs. Z')</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Bode (Freq vs. -Z'')</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Sensitivity</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0">
-         <widget class="QPushButton" name="btn_plot_map">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="font">
-           <font>
-            <family>Microsoft YaHei UI</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Plot sensitivity map</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="cbx_map_type">
-          <property name="font">
-           <font>
-            <family>Microsoft YaHei UI</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <item>
-           <property name="text">
-            <string>using Z'</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>using Z''</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>using |Z|</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>using Phase</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QComboBox" name="cbx_freq_gap">
-          <item>
-           <property name="text">
-            <string>select frequency gap</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>f-3.16*f</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>f-5.01*f</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>f-10*f</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>single frequency</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="QWidget" name="sensitivity" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>600</width>
-            <height>600</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QCheckBox" name="is_show_contour">
-          <property name="text">
-           <string>show contour label</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="cbx_map_func">
-          <item>
-           <property name="text">
-            <string>heatmap</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>contourf</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btn_export_map">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Export plot data</string>
-          </property>
-          <property name="default">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_3">
-       <attribute name="title">
-        <string>Fitting</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0" colspan="2">
-         <widget class="QPushButton" name="btn_fit">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Fitting Sensitivity</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2" colspan="2">
-         <widget class="QPushButton" name="btn_export_fit">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Export Fitting Data</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QCheckBox" name="show_formula">
-          <property name="text">
-           <string>show formula</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="6">
-         <widget class="QCheckBox" name="show_pred_interval">
-          <property name="text">
-           <string>show predict interval</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" alignment="Qt::AlignRight">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>min T: </string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="min_fit_T">
-          <property name="maximum">
-           <double>999.990000000000009</double>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2" alignment="Qt::AlignRight">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>max T: </string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QDoubleSpinBox" name="max_fit_T">
-          <property name="decimals">
-           <number>2</number>
-          </property>
-          <property name="maximum">
-           <double>999.990000000000009</double>
-          </property>
-          <property name="value">
-           <double>99.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QComboBox" name="cbx_fit_type">
-          <property name="font">
-           <font>
-            <family>Microsoft YaHei UI</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <item>
-           <property name="text">
-            <string>using Z'</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>using Z''</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>using |Z|</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>using Phase</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="5">
-         <widget class="QComboBox" name="cbx_fit_base_f">
-          <property name="font">
-           <font>
-            <family>Microsoft YaHei UI</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <item>
-           <property name="text">
-            <string>select base frequency</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>100Hz</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>50Hz</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>10Hz</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1Hz</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="6">
-         <widget class="QComboBox" name="cbx_fit_freq_gap">
-          <property name="font">
-           <font>
-            <family>Microsoft YaHei UI</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <item>
-           <property name="text">
-            <string>select frequency gap</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>f-3.16*f</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>f-5.01*f</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>f-10*f</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="7">
-         <widget class="QWidget" name="fitting" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>600</width>
-            <height>600</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_4">
-       <attribute name="title">
-        <string>Analyze</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>&gt;&gt;&gt; Fit function</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>A = </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="val_A">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-9999999999.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>9999999999.000000000000000</double>
-            </property>
-            <property name="value">
-             <double>48750.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>B = </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="val_B">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-9999999999.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>9999999999.000000000000000</double>
-            </property>
-            <property name="value">
-             <double>2825.373999999999796</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>C = </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="val_C">
-            <property name="decimals">
-             <number>4</number>
-            </property>
-            <property name="minimum">
-             <double>-9999999999.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>9999999999.000000000000000</double>
-            </property>
-            <property name="value">
-             <double>-141.822499999999991</double>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_import_fit_param">
-            <property name="text">
-             <string>Import</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Y = A / T^2 + B / T + C   </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>&gt;&gt;&gt; Model setting</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QComboBox" name="cbx_analyze_type">
-            <property name="font">
-             <font>
-              <family>Microsoft YaHei UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>using Z'</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>using Z''</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>using |Z|</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>using Phase</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="cbx_analyze_f0">
-            <property name="font">
-             <font>
-              <family>Microsoft YaHei UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>select base frequency</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>100Hz</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>50Hz</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>10Hz</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>1Hz</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="cbx_analyze_freq_gap">
-            <property name="font">
-             <font>
-              <family>Microsoft YaHei UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <item>
-             <property name="text">
-              <string>select frequency gap</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>f-3.16*f</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>f-5.01*f</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>f-10*f</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="btn_add_analyze">
-            <property name="font">
-             <font>
-              <family>Microsoft YaHei UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Add</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="btn_clear_analyze">
-            <property name="font">
-             <font>
-              <family>Microsoft YaHei UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Clear</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="btn_del_analyze">
-            <property name="font">
-             <font>
-              <family>Microsoft YaHei UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Delete Selected Row</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="3">
-           <widget class="QTableWidget" name="table_analyze">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="inputMethodHints">
-             <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
-            </property>
-            <column>
-             <property name="text">
-              <string>EIS data</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>predict T (℃)</string>
-             </property>
-             <property name="background">
-              <color>
-               <red>0</red>
-               <green>255</green>
-               <blue>255</blue>
-              </color>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>ref delta</string>
-             </property>
-             <property name="background">
-              <color>
-               <red>193</red>
-               <green>193</green>
-               <blue>193</blue>
-              </color>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>@T0</string>
-             </property>
-             <property name="font">
-              <font>
-               <family>Microsoft YaHei UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-            </column>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QPushButton" name="btn_run_analyze">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Run</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_export_analyze">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Export</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_set_default_ref">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Set 1st row as default reference</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>421</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>

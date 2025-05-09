@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QVBoxLayout
 from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtGui import QIcon
 from mainwindow_ui import Ui_MainWindow
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -12,9 +13,9 @@ from eisdata import EISDataSet, EISBattery, BatteryInfo
 import statsmodels.api as sm
 from scipy.optimize import curve_fit
 
-_FREQ_DICT = {'1': 100, '2': 50, '3': 10, '4': 1}
-_GAP_DICT = {'1': 3.16, '2': 5.01, '3': 10, '4': 0}
-_TYPE_DICT = {'0': 'real', '1': 'imag', '2': 'norm', '3': 'phase'}
+_FREQ_DICT = {"1": 100, "2": 50, "3": 10, "4": 1}
+_GAP_DICT = {"1": 3.16, "2": 5.01, "3": 10, "4": 0}
+_TYPE_DICT = {"0": "real", "1": "imag", "2": "norm", "3": "phase"}
 
 
 class EISTMainWindow(QMainWindow):
@@ -54,14 +55,14 @@ class EISTMainWindow(QMainWindow):
 
     def add_preview_canvas(self):
         self.preview_fig = Figure()
-        self.ax_preview = self.preview_fig.add_subplot(111, projection='3d')
+        self.ax_preview = self.preview_fig.add_subplot(111, projection="3d")
         self.preview_canvas = FigureCanvas(self.preview_fig)
         self.layout = QVBoxLayout(self.ui.previewer)
         self.layout.addWidget(self.preview_canvas)
-        self.ax_preview.set_ylabel('T (℃)')
+        self.ax_preview.set_ylabel("T (℃)")
         self.ax_preview.set_xlabel("Z'")
         self.ax_preview.set_zlabel("-Z''")
-        self.ax_preview.set_title('EIS')
+        self.ax_preview.set_title("EIS")
 
     def add_sensitive_canvas(self):
         self.sensitive_fig = Figure()
@@ -72,7 +73,8 @@ class EISTMainWindow(QMainWindow):
         self.ax_sensitive.set_xlabel("T (℃)")
         self.ax_sensitive.set_ylabel("Freq (Hz)")
         self.ax_sensitive.set_title(
-            f'Sensitivity of {self.ui.cbx_map_type.currentText()[6:]}')
+            f"Sensitivity of {self.ui.cbx_map_type.currentText()[6:]}"
+        )
 
     def add_fit_canvas(self):
         self.fit_fig = Figure()
@@ -82,61 +84,71 @@ class EISTMainWindow(QMainWindow):
         self.layout.addWidget(self.fit_canvas)
         self.ax_fit.set_xlabel("T (℃)")
         self.ax_fit.set_ylabel("Fit Value")
-        self.ax_fit.set_title(
-            f'Fit of {self.ui.cbx_fit_type.currentText()[6:]}')
+        self.ax_fit.set_title(f"Fit of {self.ui.cbx_fit_type.currentText()[6:]}")
 
     def _data_append_pkl(self, pkl_file: str):
-        if pkl_file.endswith('.pkl'):
+        if pkl_file.endswith(".pkl"):
             if self._data is None:
                 self._data = EISDataSet(
-                    soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], []))
+                    soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], [])
+                )
             new_dataset = EISDataSet.from_pkl(pkl_file)
             self._data.extend(new_dataset)
         else:
-            raise Exception('Only support pkl files')
+            raise Exception("Only support pkl files")
 
     def _analyze_data_append_pkl(self, pkl_file: str):
-        if pkl_file.endswith('.pkl'):
+        if pkl_file.endswith(".pkl"):
             if self._analyze_data is None:
                 self._analyze_data = EISDataSet(
-                    soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], []))
+                    soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], [])
+                )
             new_dataset = EISDataSet.from_pkl(pkl_file)
             self._analyze_data.extend(new_dataset)
         else:
-            raise Exception('Only support pkl files')
+            raise Exception("Only support pkl files")
 
-    def _data_append(self, temperature, frequency, real, imag, soc=None, soh=None, info: dict = {}):
+    def _data_append(
+        self, temperature, frequency, real, imag, soc=None, soh=None, info: dict = {}
+    ):
         if self._data is None:
             self._data = EISDataSet(
-                soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], []))
-        new_dataset = EISDataSet(soc, soh, BatteryInfo(
-            **info), EISBattery([temperature], [frequency], [real], [imag]))
+                soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], [])
+            )
+        new_dataset = EISDataSet(
+            soc,
+            soh,
+            BatteryInfo(**info),
+            EISBattery([temperature], [frequency], [real], [imag]),
+        )
         self._data.extend(new_dataset)
 
     def _pick_data_from_file(self, file):
         skiprows = self.ui.skip_rows.value()
 
-        if file.split('.')[-1].lower() in ['csv', 'txt']:
-            delimiters = [None, ',', ';']
+        if file.split(".")[-1].lower() in ["csv", "txt"]:
+            delimiters = [None, ",", ";"]
             for d in delimiters:
                 try:
                     data = np.loadtxt(file, delimiter=d, skiprows=skiprows)
                     self.ui.statusbar.showMessage(
-                        f'load data success d={d},skip={skiprows}.')
+                        f"load data success d={d},skip={skiprows}."
+                    )
                     break
                 except Exception as e:
                     self.ui.statusbar.showMessage(
-                        f'load data failed d={d},skip={skiprows}: {e}')
+                        f"load data failed d={d},skip={skiprows}: {e}"
+                    )
 
-        elif file.split('.')[-1].lower() == 'xlsx':
+        elif file.split(".")[-1].lower() == "xlsx":
             data = pd.read_excel(file)
             data = data.to_numpy()
 
         else:
-            raise Exception(f'Unsupported file type: {file.split("/")[-1]}')
+            raise Exception(f"Unsupported file type: {file.split('/')[-1]}")
 
         if data is None:
-            raise Exception(f'Failed to load data from {file.split("/")[-1]}.')
+            raise Exception(f"Failed to load data from {file.split('/')[-1]}.")
 
         try:
             f_col = self.ui.col_freq.value() - 1
@@ -150,21 +162,22 @@ class EISTMainWindow(QMainWindow):
             return f, re, neg_im
 
         except Exception as e:
-            self.ui.statusbar.showMessage(
-                f'Data format error: {file.split("/")[-1]}')
+            self.ui.statusbar.showMessage(f"Data format error: {file.split('/')[-1]}")
             return None
 
     def _load_data(self):
         self._data = EISDataSet(
-            soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], []))
-        file_list = [self.ui.table.item(i, 1).text()
-                     for i in range(self.ui.table.rowCount())]
+            soc=[], soh=[], info=BatteryInfo(), eis=EISBattery([], [], [], [])
+        )
+        file_list = [
+            self.ui.table.item(i, 1).text() for i in range(self.ui.table.rowCount())
+        ]
         temperature = []
         frequency = []
         real = []
         neg_imag = []
         for i, file in enumerate(file_list):
-            if file.split('.')[-1].lower() not in ['csv', 'txt', 'xlsx']:
+            if file.split(".")[-1].lower() not in ["csv", "txt", "xlsx"]:
                 continue
             T = float(self.ui.table.item(i, 0).text())
             try:
@@ -172,7 +185,8 @@ class EISTMainWindow(QMainWindow):
                 f, re, neg_im = pdata
             except Exception as e:
                 self.ui.statusbar.showMessage(
-                    f'Load data failed: {file.split("/")[-1]}. Error: {e}')
+                    f"Load data failed: {file.split('/')[-1]}. Error: {e}"
+                )
                 f = None
                 re = None
                 neg_im = None
@@ -181,37 +195,40 @@ class EISTMainWindow(QMainWindow):
             real.append(re)
             neg_imag.append(neg_im)
         if len(temperature) > 0:
-            self._data_append(temperature, frequency, real,
-                              neg_imag, soc=None, soh=None, info={})
+            self._data_append(
+                temperature, frequency, real, neg_imag, soc=None, soh=None, info={}
+            )
 
         for i, file in enumerate(file_list):
-            if file.split('.')[-1].lower() == 'pkl':
+            if file.split(".")[-1].lower() == "pkl":
                 self._data_append_pkl(file)
-        self.ui.statusbar.showMessage('All files are loaded.')
+        self.ui.statusbar.showMessage("All files are loaded.")
 
     def _get_delta_from_eis(self, frequency, real, neg_imag, f0, f1, type=0):
-        idx_f0 = np.argmin(np.abs(np.log(frequency)-np.log(f0)))
-        idx_f1 = np.argmin(np.abs(np.log(frequency)-np.log(f1)))
+        idx_f0 = np.argmin(np.abs(np.log(frequency) - np.log(f0)))
+        idx_f1 = np.argmin(np.abs(np.log(frequency) - np.log(f1)))
         match type:
             case 0:
                 delta = real[idx_f0] - real[idx_f1]
             case 1:
                 delta = neg_imag[idx_f0] - neg_imag[idx_f1]
             case 2:
-                delta = np.sqrt(real[idx_f0]**2 + neg_imag[idx_f0]**2) - \
-                    np.sqrt(real[idx_f1]**2 + neg_imag[idx_f1]**2)
+                delta = np.sqrt(real[idx_f0] ** 2 + neg_imag[idx_f0] ** 2) - np.sqrt(
+                    real[idx_f1] ** 2 + neg_imag[idx_f1] ** 2
+                )
             case 3:
-                delta = np.arctan2(
-                    neg_imag[idx_f0], real[idx_f0]) - np.arctan2(neg_imag[idx_f1], real[idx_f1])
+                delta = np.arctan2(neg_imag[idx_f0], real[idx_f0]) - np.arctan2(
+                    neg_imag[idx_f1], real[idx_f1]
+                )
                 delta = np.rad2deg(delta)
             case _:
-                raise Exception('Invalid type')
+                raise Exception("Invalid type")
         return delta
 
     def _t_from_y(self, y, A, B, C):
-        d = B**2 - 4*A*(C-y)
-        x = (-B + np.sqrt(d)) / (2*A)
-        return 1/x
+        d = B**2 - 4 * A * (C - y)
+        x = (-B + np.sqrt(d)) / (2 * A)
+        return 1 / x
 
     def _run_analyze_from_row(self, row):
         file = self.ui.table_analyze.item(row, 0).text()
@@ -225,9 +242,9 @@ class EISTMainWindow(QMainWindow):
         A = self.ui.val_A.value()
         B = self.ui.val_B.value()
         C = self.ui.val_C.value()
-        delta30 = delta_ref / (1 + np.poly1d([A, B, C])(1/T_ref))
+        delta30 = delta_ref / (1 + np.poly1d([A, B, C])(1 / T_ref))
 
-        if file.split('.')[-1].lower() == 'pkl':
+        if file.split(".")[-1].lower() == "pkl":
             data = EISDataSet.from_pkl(file)
             Δ = []
             y = []
@@ -237,33 +254,34 @@ class EISTMainWindow(QMainWindow):
                     re = data.eis.real[i][j]
                     neg_im = data.eis.neg_imag[i][j]
                     delta = self._get_delta_from_eis(
-                        f, re, neg_im, f0, f1, type=analyze_type)
+                        f, re, neg_im, f0, f1, type=analyze_type
+                    )
                     yij = (delta - delta30) / delta30
                     y.append(yij)
                     T_pred.append(self._t_from_y(yij, A, B, C))
                     Δ.append(delta)
-            T_str = ','.join([f'{t:.2f}' for t in T_pred])
+            T_str = ",".join([f"{t:.2f}" for t in T_pred])
             self.ui.table_analyze.setItem(row, 1, QTableWidgetItem(T_str))
             return Δ, y, T_pred
-        if file.split('.')[-1].lower() in ['csv', 'txt', 'xlsx']:
+        if file.split(".")[-1].lower() in ["csv", "txt", "xlsx"]:
             data = self._pick_data_from_file(file)
             if data is None:
-                self.ui.statusbar.showMessage('File format is not supported')
+                self.ui.statusbar.showMessage("File format is not supported")
                 return None
             else:
                 f, re, neg_im = data
                 delta = self._get_delta_from_eis(
-                    f, re, neg_im, f0, f1, type=analyze_type)
+                    f, re, neg_im, f0, f1, type=analyze_type
+                )
                 y = (delta - delta30) / delta30
                 T = self._t_from_y(y, A, B, C)
-                self.ui.table_analyze.setItem(
-                    row, 1, QTableWidgetItem(f'{T:.2f}'))
+                self.ui.table_analyze.setItem(row, 1, QTableWidgetItem(f"{T:.2f}"))
                 return delta, y, T
 
     def _run_analyze(self):
         row_to_analyze = self.ui.table_analyze.rowCount()
         if row_to_analyze == 0:
-            self.ui.statusbar.showMessage('No data to analyze')
+            self.ui.statusbar.showMessage("No data to analyze")
             return
 
         Δ, Y, T_pred = [], [], []
@@ -282,15 +300,19 @@ class EISTMainWindow(QMainWindow):
 
     def change_col(self):
         col = self.ui.col_freq.value()
-        self.ui.col_real.setValue(col+1)
-        self.ui.col_imag.setValue(col+2)
+        self.ui.col_real.setValue(col + 1)
+        self.ui.col_imag.setValue(col + 2)
 
     # Slots
     # import data buttons
 
     def add_data(self):
         fileNames, _ = QFileDialog.getOpenFileNames(
-            None, "Select File", "", "data Files (*.csv;*.txt;*.pkl;*.xlsx);;All Files (*)")
+            None,
+            "Select File",
+            "",
+            "data Files (*.csv;*.txt;*.pkl;*.xlsx);;All Files (*)",
+        )
         if not fileNames:
             return
         for fileName in fileNames:
@@ -322,11 +344,10 @@ class EISTMainWindow(QMainWindow):
         self.ui.btn_export_pkl.setEnabled(False)
 
     def delete_row(self):
-        selected_rows = [index.row()
-                         for index in self.ui.table.selectedIndexes()]
+        selected_rows = [index.row() for index in self.ui.table.selectedIndexes()]
         rows_to_remove = sorted(list(set(selected_rows)), reverse=True)
         for row in rows_to_remove:
-            self.ui.tableWidget.removeRow(row)
+            self.ui.table.removeRow(row)
         row = self.ui.table.rowCount()
         if row == 0:
             self.ui.btn_plot_EIS.setEnabled(False)
@@ -339,17 +360,18 @@ class EISTMainWindow(QMainWindow):
     def export_pkl(self):
         try:
             fileName, _ = QFileDialog.getSaveFileName(
-                None, "Save File", "", "Pickle Files (*.pkl);;All Files (*)")
+                None, "Save File", "", "Pickle Files (*.pkl);;All Files (*)"
+            )
             if not fileName:
                 return
             try:
                 self._load_data()
             except Exception as e:
-                self.ui.statusbar.showMessage('load: '+str(e))
+                self.ui.statusbar.showMessage("load: " + str(e))
                 return
             self._data.to_pkl(fileName)
         except Exception as e:
-            self.ui.statusbar.showMessage('save: '+fileName+str(e))
+            self.ui.statusbar.showMessage("save: " + fileName + str(e))
 
     # preview pannel
     def plot_EIS(self):
@@ -371,7 +393,7 @@ class EISTMainWindow(QMainWindow):
                             z = im[i][j]
                         case 1:
                             x = np.log10(freq[i][j])
-                            z = np.sqrt(re[i][j]**2 + im[i][j]**2)
+                            z = np.sqrt(re[i][j] ** 2 + im[i][j] ** 2)
                         case 2:
                             x = np.log10(freq[i][j])
                             z = np.rad2deg(np.arctan2(im[i][j], re[i][j]))
@@ -381,9 +403,9 @@ class EISTMainWindow(QMainWindow):
                         case 4:
                             x = np.log10(freq[i][j])
                             z = im[i][j]
-                    y = temperature[i][j]*np.ones(x.shape)
-                    self.ax_preview.plot(x, y, z, 'o--', alpha=0.5)
-            
+                    y = temperature[i][j] * np.ones(x.shape)
+                    self.ax_preview.plot(x, y, z, "o--", alpha=0.5)
+
             self.ax_preview.set_ylabel("T (℃)")
             if preview_type == 0:
                 self.ax_preview.set_xlabel("Z'")
@@ -404,13 +426,13 @@ class EISTMainWindow(QMainWindow):
             self.preview_canvas.draw()
 
         except Exception as e:
-            self.ui.statusbar.showMessage('plot_EIS: ' + str(e))
+            self.ui.statusbar.showMessage("plot_EIS: " + str(e))
 
     def plot_map(self):
         try:
             self._load_data()
         except Exception as e:
-            self.ui.statusbar.showMessage('load: '+str(e))
+            self.ui.statusbar.showMessage("load: " + str(e))
             return
 
         # sensitivity map data require temperature and frequency
@@ -420,24 +442,26 @@ class EISTMainWindow(QMainWindow):
             re = np.vstack(self._data.eis.real[0])
             im = np.vstack(self._data.eis.neg_imag[0])
         except Exception as e:
-            self.ui.statusbar.showMessage(
-                'length of data is not consist: '+str(e))
+            self.ui.statusbar.showMessage("length of data is not consist: " + str(e))
             return
 
         gap = self.ui.cbx_freq_gap.currentIndex()
         try:
-            gap_dict = {'1': 3.16, '2': 5.01, '3': 10, '4': 0}
+            gap_dict = {"1": 3.16, "2": 5.01, "3": 10, "4": 0}
             gap = gap_dict[str(gap)]
         except KeyError:
-            self.ui.statusbar.showMessage('gap:'+str(gap))
+            self.ui.statusbar.showMessage(
+                f"gap is not valid: {gap}. Please select a valid gap."
+            )
             return
         f0 = f[0, :]
         if gap > 0:
-            num_gap = np.argmin(
-                f0) - np.argmin(np.abs(np.log(f0) - np.log(gap*f0.min())))
-            self.ui.statusbar.showMessage('num_gap:'+str(num_gap))
-            if num_gap < 0 or num_gap > len(f0)-1:
-                self.ui.statusbar.showMessage('gap out of bound.')
+            num_gap = np.argmin(f0) - np.argmin(
+                np.abs(np.log(f0) - np.log(gap * f0.min()))
+            )
+            self.ui.statusbar.showMessage("num_gap:" + str(num_gap))
+            if num_gap < 0 or num_gap > len(f0) - 1:
+                self.ui.statusbar.showMessage("gap out of bound.")
                 return
         else:
             num_gap = 0
@@ -460,25 +484,30 @@ class EISTMainWindow(QMainWindow):
                 levels = np.linspace(vmin, vmax, 20)
             try:
                 self.ax_sensitive.clear()
-                if map_func == 'heatmap':
+                if map_func == "heatmap":
                     self.ax_sensitive.pcolor(
-                        x, y, Δ, cmap='RdBu_r', vmin=vmin, vmax=vmax)
-                elif map_func == 'contourf':
+                        x, y, Δ, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
+                elif map_func == "contourf":
                     self.ax_sensitive.contourf(
-                        x, y, Δ, levels=levels, cmap='RdBu_r', vmin=vmin, vmax=vmax)
+                        x, y, Δ, levels=levels, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
                 else:
                     self.ui.statusbar.showMessage(
-                        'map_function unknow: '+str(map_func))
+                        "map_function unknow: " + str(map_func)
+                    )
                 if self.ui.is_show_contour.isChecked():
                     c = self.ax_sensitive.contour(
-                        x, y, Δ, levels=levels, colors='k', alpha=0.5)
+                        x, y, Δ, levels=levels, colors="k", alpha=0.5
+                    )
                     self.ax_sensitive.clabel(c, inline=True, fontsize=8)
-                self.ax_sensitive.set_yscale('log')
+                self.ax_sensitive.set_yscale("log")
+                self.ax_sensitive.set_ylabel("f (Hz)")
                 self.ax_sensitive.set_xlabel("T (℃)")
                 if num_gap == 0:
-                    self.ax_sensitive.set_ylabel(r"$Z'$ (ohm)")
+                    self.ax_sensitive.set_title(r"$Z'$ (ohm)")
                 else:
-                    self.ax_sensitive.set_ylabel(r"$\Delta Z'$ (ohm)")
+                    self.ax_sensitive.set_title(r"$\Delta Z'$ (ohm)")
                 self.sensitive_canvas.draw()
             except Exception as e:
                 self.ui.statusbar.showMessage(str(e))
@@ -500,25 +529,30 @@ class EISTMainWindow(QMainWindow):
                 levels = np.linspace(vmin, vmax, 20)
             try:
                 self.ax_sensitive.clear()
-                if map_func == 'heatmap':
+                if map_func == "heatmap":
                     self.ax_sensitive.pcolor(
-                        x, y, Δ, cmap='RdBu_r', vmin=vmin, vmax=vmax)
-                elif map_func == 'contourf':
+                        x, y, Δ, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
+                elif map_func == "contourf":
                     self.ax_sensitive.contourf(
-                        x, y, Δ, levels=levels, cmap='RdBu_r', vmin=vmin, vmax=vmax)
+                        x, y, Δ, levels=levels, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
                 else:
                     self.ui.statusbar.showMessage(
-                        'map_function unknow: '+str(map_func))
+                        "map_function unknow: " + str(map_func)
+                    )
                 if self.ui.is_show_contour.isChecked():
                     c = self.ax_sensitive.contour(
-                        x, y, Δ, levels=levels, colors='k', alpha=0.5)
+                        x, y, Δ, levels=levels, colors="k", alpha=0.5
+                    )
                     self.ax_sensitive.clabel(c, inline=True, fontsize=8)
-                self.ax_sensitive.set_yscale('log')
+                self.ax_sensitive.set_yscale("log")
+                self.ax_sensitive.set_ylabel("f (Hz)")
                 self.ax_sensitive.set_xlabel("T (℃)")
                 if num_gap == 0:
-                    self.ax_sensitive.set_ylabel(r"$-Z''$ (ohm)")
+                    self.ax_sensitive.set_title(r"$-Z''$ (ohm)")
                 else:
-                    self.ax_sensitive.set_ylabel(r"$\Delta (-Z'')$ (ohm)")
+                    self.ax_sensitive.set_title(r"$\Delta (-Z'')$ (ohm)")
                 self.sensitive_canvas.draw()
             except Exception as e:
                 self.ui.statusbar.showMessage(str(e))
@@ -541,25 +575,30 @@ class EISTMainWindow(QMainWindow):
                 levels = np.linspace(vmin, vmax, 20)
             try:
                 self.ax_sensitive.clear()
-                if map_func == 'heatmap':
+                if map_func == "heatmap":
                     self.ax_sensitive.pcolor(
-                        x, y, Δ, cmap='RdBu_r', vmin=vmin, vmax=vmax)
-                elif map_func == 'contourf':
+                        x, y, Δ, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
+                elif map_func == "contourf":
                     self.ax_sensitive.contourf(
-                        x, y, Δ, levels=levels, cmap='RdBu_r', vmin=vmin, vmax=vmax)
+                        x, y, Δ, levels=levels, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
                 else:
                     self.ui.statusbar.showMessage(
-                        'map_function unknow: '+str(map_func))
+                        "map_function unknow: " + str(map_func)
+                    )
                 if self.ui.is_show_contour.isChecked():
                     c = self.ax_sensitive.contour(
-                        x, y, Δ, levels=levels, colors='k', alpha=0.5)
+                        x, y, Δ, levels=levels, colors="k", alpha=0.5
+                    )
                     self.ax_sensitive.clabel(c, inline=True, fontsize=8)
-                self.ax_sensitive.set_yscale('log')
+                self.ax_sensitive.set_yscale("log")
+                self.ax_sensitive.set_ylabel("f (Hz)")
                 self.ax_sensitive.set_xlabel("T (℃)")
                 if num_gap == 0:
-                    self.ax_sensitive.set_ylabel(r"$|Z|$ (ohm)")
+                    self.ax_sensitive.set_title(r"$|Z|$ (ohm)")
                 else:
-                    self.ax_sensitive.set_ylabel(r"$\Delta (|Z|)$ (ohm)")
+                    self.ax_sensitive.set_title(r"$\Delta (|Z|)$ (ohm)")
                 self.sensitive_canvas.draw()
             except Exception as e:
                 self.ui.statusbar.showMessage(str(e))
@@ -582,25 +621,30 @@ class EISTMainWindow(QMainWindow):
                 levels = np.linspace(vmin, vmax, 20)
             try:
                 self.ax_sensitive.clear()
-                if map_func == 'heatmap':
+                if map_func == "heatmap":
                     self.ax_sensitive.pcolor(
-                        x, y, Δ, cmap='RdBu_r', vmin=vmin, vmax=vmax)
-                elif map_func == 'contourf':
+                        x, y, Δ, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
+                elif map_func == "contourf":
                     self.ax_sensitive.contourf(
-                        x, y, Δ, levels=levels, cmap='RdBu_r', vmin=vmin, vmax=vmax)
+                        x, y, Δ, levels=levels, cmap="RdBu_r", vmin=vmin, vmax=vmax
+                    )
                 else:
                     self.ui.statusbar.showMessage(
-                        'map_function unknow: '+str(map_func))
+                        "map_function unknow: " + str(map_func)
+                    )
                 if self.ui.is_show_contour.isChecked():
                     c = self.ax_sensitive.contour(
-                        x, y, Δ, levels=levels, colors='k', alpha=0.5)
+                        x, y, Δ, levels=levels, colors="k", alpha=0.5
+                    )
                     self.ax_sensitive.clabel(c, inline=True, fontsize=8)
-                self.ax_sensitive.set_yscale('log')
+                self.ax_sensitive.set_yscale("log")
+                self.ax_sensitive.set_ylabel("f (Hz)")
                 self.ax_sensitive.set_xlabel("T (℃)")
                 if num_gap == 0:
-                    self.ax_sensitive.set_ylabel(r"Phase (degree)")
+                    self.ax_sensitive.set_title(r"Phase (degree)")
                 else:
-                    self.ax_sensitive.set_ylabel(r"Phase (degree)")
+                    self.ax_sensitive.set_title(r"Phase (degree)")
                 self.sensitive_canvas.draw()
             except Exception as e:
                 self.ui.statusbar.showMessage(str(e))
@@ -611,7 +655,8 @@ class EISTMainWindow(QMainWindow):
     def export_map(self):
         try:
             filename, _ = QFileDialog.getSaveFileName(
-                None, "Save File", "", "Text Files (*.txt)")
+                None, "Save File", "", "Text Files (*.txt)"
+            )
             if not filename:
                 return
             x, y, Δ = self._map_data
@@ -619,8 +664,13 @@ class EISTMainWindow(QMainWindow):
             y = y.flatten()
             Δ = Δ.flatten()
             data = np.column_stack([x, y, Δ])
-            np.savetxt(filename, data, delimiter='\t', fmt='%.6g',
-                       header='Temperature\tfrequency\tdata')
+            np.savetxt(
+                filename,
+                data,
+                delimiter="\t",
+                fmt="%.6g",
+                header="Temperature\tfrequency\tdata",
+            )
 
         except Exception as e:
             self.ui.statusbar.showMessage(str(e))
@@ -631,18 +681,22 @@ class EISTMainWindow(QMainWindow):
     def fit(self):
         f0 = self.ui.cbx_fit_base_f.currentIndex()
         try:
-            freq_dict = {'1': 100, '2': 50, '3': 10, '4': 1}
+            freq_dict = {"1": 100, "2": 50, "3": 10, "4": 1}
             f0 = freq_dict[str(f0)]
         except KeyError:
-            self.ui.statusbar.showMessage('f0:'+str(f0))
+            self.ui.statusbar.showMessage(
+                f"base frequency is not valid: {f0}. Please select a valid one."
+            )
             return
 
         gap = self.ui.cbx_fit_freq_gap.currentIndex()
         try:
-            gap_dict = {'1': 3.16, '2': 5.01, '3': 10, '4': 0}
+            gap_dict = {"1": 3.16, "2": 5.01, "3": 10, "4": 0}
             gap = gap_dict[str(gap)]
         except KeyError:
-            self.ui.statusbar.showMessage('gap:'+str(gap))
+            self.ui.statusbar.showMessage(
+                f"gap is not valid: {gap}.  Please select a valid one."
+            )
             return
 
         fit_type = self.ui.cbx_fit_type.currentIndex()
@@ -663,8 +717,7 @@ class EISTMainWindow(QMainWindow):
                     im = eis.neg_imag[i][j]
                     if f.min() <= f0 and f.max() >= f0 * gap:
                         idx_f0 = np.argmin(np.abs(np.log(f) - np.log(f0)))
-                        idx_f1 = np.argmin(
-                            np.abs(np.log(f) - np.log(f0 * gap)))
+                        idx_f1 = np.argmin(np.abs(np.log(f) - np.log(f0 * gap)))
                     else:
                         continue
                     if fit_type == 0:
@@ -672,14 +725,18 @@ class EISTMainWindow(QMainWindow):
                     elif fit_type == 1:
                         delta = im[idx_f0] - im[idx_f1]
                     elif fit_type == 2:
-                        delta = np.sqrt(
-                            re[idx_f0]**2 + im[idx_f0]**2) - np.sqrt(re[idx_f1]**2 + im[idx_f1]**2)
+                        delta = np.sqrt(re[idx_f0] ** 2 + im[idx_f0] ** 2) - np.sqrt(
+                            re[idx_f1] ** 2 + im[idx_f1] ** 2
+                        )
                     elif fit_type == 3:
-                        delta = np.arctan2(
-                            im[idx_f0], re[idx_f0]) - np.arctan2(im[idx_f1], re[idx_f1])
+                        delta = np.arctan2(im[idx_f0], re[idx_f0]) - np.arctan2(
+                            im[idx_f1], re[idx_f1]
+                        )
                     else:
                         self.ui.statusbar.showMessage(
-                            'fit type unknow: '+str(fit_type))
+                            "fit type unknow: "
+                            + str(fit_type + ". Please select valid fit type.")
+                        )
                         return
                     Δi.append(delta)
                     Ti.append(t)
@@ -687,24 +744,24 @@ class EISTMainWindow(QMainWindow):
                 Ti = np.array(Ti).flatten()
                 Δ.append(Δi)
                 T.append(Ti)
-                p = np.polyfit(1/Ti, Δi, 2)
-                delta_ref = np.poly1d(p)(1/30)
+                p = np.polyfit(1 / Ti, Δi, 2)
+                delta_ref = np.poly1d(p)(1 / 30)
                 Δref.append(delta_ref)
-                y.append(Δi/delta_ref - 1)
+                y.append(Δi / delta_ref - 1)
         except Exception as e:
-            self.ui.statusbar.showMessage('fit: '+str(e))
+            self.ui.statusbar.showMessage("fit exception: " + str(e))
             return
 
         try:
             self.ax_fit.clear()
             for i in range(len(y)):
-                self.ax_fit.plot(T[i], y[i], '--o', alpha=0.2)
+                self.ax_fit.plot(T[i], y[i], "--o", alpha=0.2)
             self.ax_fit.set_xlabel("T (℃)")
             self.ax_fit.set_ylabel("y")
-            self.ax_fit.grid('on')
+            self.ax_fit.grid("on")
             self.fit_canvas.draw()
         except Exception as e:
-            self.ui.statusbar.showMessage('ax_fit plot: '+str(e))
+            self.ui.statusbar.showMessage("ax_fit plot exception: " + str(e))
             return
 
         try:
@@ -719,10 +776,10 @@ class EISTMainWindow(QMainWindow):
                 T_sort = T_sort[mask]
                 y_sort = y_sort[mask]
 
-            p = np.polyfit(1/T_sort, y_sort, 2)
-            y_hat = np.poly1d(p)(1/T_sort)
+            p = np.polyfit(1 / T_sort, y_sort, 2)
+            y_hat = np.poly1d(p)(1 / T_sort)
 
-            X = np.column_stack((1/T_sort**2, 1/T_sort, np.ones(T_sort.shape)))
+            X = np.column_stack((1 / T_sort**2, 1 / T_sort, np.ones(T_sort.shape)))
             res = sm.OLS(y_sort, X).fit()
             pred_ols = res.get_prediction()
             iv_l = pred_ols.summary_frame()["obs_ci_lower"]
@@ -730,45 +787,81 @@ class EISTMainWindow(QMainWindow):
             if self.ui.show_pred_interval.isChecked():
                 self.ax_fit.fill_between(T_sort, iv_l, iv_u, alpha=0.2)
 
-            formula = r'y={:.2f}/T^2+{:.2f}/T+{:.2f}'.format(p[0], p[1], p[2])
-            self.ax_fit.plot(T_sort, y_hat, 'r-', label=formula)
+            formula = rf"$y={p[0]:+.6g}/T^2 {p[1]:+.6g}/T {p[2]:+.6g}$"
+            self.ax_fit.plot(T_sort, y_hat, "r-.", label=formula, alpha=0.6)
             if self.ui.show_formula.isChecked():
                 self.ax_fit.legend()
             self.fit_canvas.draw()
         except Exception as e:
-            self.ui.statusbar.showMessage('fit: '+str(e))
+            self.ui.statusbar.showMessage("fit exception: " + str(e))
             return
+
+        if self.ui.cbx_fit_act_energy.isChecked():
+            # def neg_log_r(T, Ea, a, T_ref=303.15):
+            #     return Ea/8.314*(1/T - 1/T_ref) + a
+
+            def neg_log_r(T, Ea, T_ref=303.15):
+                return Ea / 8.314 * (1 / T - 1 / T_ref)
+
+            try:
+                neg_log_r_act = np.log(1 + y_sort)
+                T_act = T_sort + 273.15
+                # popt, _ = curve_fit(neg_log_r, T_act, neg_log_r_act, p0=[1000, 1])
+                # y_act_hat = np.exp(popt[1])*np.exp(neg_log_r(T_act, *popt)) - 1
+                popt, _ = curve_fit(neg_log_r, T_act, neg_log_r_act, p0=[10000])
+                y_act_hat = np.exp(neg_log_r(T_act, *popt)) - 1
+                formula = (
+                    r"$y=\exp\left[\frac{E_{a}}{R}\left(\frac{1}{T} - \frac{1}{303.15K}\right)\right] - 1$"
+                    + f", Ea={popt[0] / 1000:.6g} kJ/mol"
+                )
+                self.ax_fit.plot(T_sort, y_act_hat, "b-.", label=formula, alpha=0.6)
+                if self.ui.show_formula.isChecked():
+                    self.ax_fit.legend()
+                self.fit_canvas.draw()
+            except Exception as e:
+                self.ui.statusbar.showMessage("fit activation energy: " + str(e))
+                return
 
         self.ui.btn_export_fit.setEnabled(True)
         self._fit_data = [T, y, T_sort, y_hat, iv_l, iv_u, formula, p]
         self.ui.val_A.setValue(p[0])
         self.ui.val_B.setValue(p[1])
         self.ui.val_C.setValue(p[2])
-        self.ui.cbx_analyze_type.setCurrentIndex(
-            self.ui.cbx_fit_type.currentIndex())
-        self.ui.cbx_analyze_f0.setCurrentIndex(
-            self.ui.cbx_fit_base_f.currentIndex())
+        self.ui.cbx_analyze_type.setCurrentIndex(self.ui.cbx_fit_type.currentIndex())
+        self.ui.cbx_analyze_f0.setCurrentIndex(self.ui.cbx_fit_base_f.currentIndex())
         self.ui.cbx_analyze_freq_gap.setCurrentIndex(
-            self.ui.cbx_fit_freq_gap.currentIndex())
+            self.ui.cbx_fit_freq_gap.currentIndex()
+        )
 
     def export_fit(self):
         try:
             filename, _ = QFileDialog.getSaveFileName(
-                None, "Save File", "", "Txt Files (*.txt)")
+                None, "Save File", "", "Txt Files (*.txt)"
+            )
             if not filename:
                 return
             T, y, T_sort, y_hat, iv_l, iv_u, formula, p = self._fit_data
             type_fit = str(self.ui.cbx_fit_type.currentIndex())
             f0 = str(self.ui.cbx_fit_base_f.currentIndex())
             gap = str(self.ui.cbx_fit_freq_gap.currentIndex())
-            comments = f'# Y=A/(T^2)+B/(T)+C\n# {p[0]:.4f}\t{p[1]:.4f}\t{p[2]:.4f}\n# {type_fit}\t{f0}\t{gap}\n'
+            comments = f"# Y=A/(T^2)+B/(T)+C\n# {p[0]:.4f}\t{p[1]:.4f}\t{p[2]:.4f}\n# {type_fit}\t{f0}\t{gap}\n"
             data_original = np.column_stack([T, y])
             data_fit = np.column_stack([T_sort, y_hat, iv_l, iv_u])
-            np.savetxt(filename, data_fit, delimiter='\t', fmt='%.6g',
-                       header='# Temperature\ty_hat\ty_pred_low\ty_pred_up', comments=comments)
-            if filename.split('.')[-1].lower() == 'txt':
-                np.savetxt(filename[:-4]+'_original.txt', data_original,
-                           delimiter='\t', header='Temperature\ty')
+            np.savetxt(
+                filename,
+                data_fit,
+                delimiter="\t",
+                fmt="%.6g",
+                header="# Temperature\ty_hat\ty_pred_low\ty_pred_up",
+                comments=comments,
+            )
+            if filename.split(".")[-1].lower() == "txt":
+                np.savetxt(
+                    filename[:-4] + "_original.txt",
+                    data_original,
+                    delimiter="\t",
+                    header="Temperature\ty",
+                )
 
         except Exception as e:
             self.ui.statusbar.showMessage(str(e))
@@ -779,36 +872,39 @@ class EISTMainWindow(QMainWindow):
     def import_fit_param(self):
         try:
             fileName, _ = QFileDialog.getOpenFileName(
-                None, "Select File", "", "txt Files (*.txt;);;All Files (*)")
+                None, "Select File", "", "txt Files (*.txt;);;All Files (*)"
+            )
             if not fileName:
                 return
-            with open(fileName, 'r') as f:
+            with open(fileName, "r") as f:
                 line = f.readline()
                 line = f.readline()
-                A, B, C = map(float, line[1:].split('\t'))
+                A, B, C = map(float, line[1:].split("\t"))
                 self.ui.val_A.setValue(A)
                 self.ui.val_B.setValue(B)
                 self.ui.val_C.setValue(C)
                 line = f.readline()
-                type_fit, f0, gap = map(int, line[2:].split('\t'))
+                type_fit, f0, gap = map(int, line[2:].split("\t"))
                 self.ui.cbx_analyze_type.setCurrentIndex(type_fit)
                 self.ui.cbx_analyze_f0.setCurrentIndex(f0)
                 self.ui.cbx_analyze_freq_gap.setCurrentIndex(gap)
         except Exception as e:
-            self.ui.statusbar.showMessage(
-                f'Error when loading parameters: {e}')
+            self.ui.statusbar.showMessage(f"Error when loading parameters: {e}")
             return
 
     def add_analyze(self):
         fileNames, _ = QFileDialog.getOpenFileNames(
-            None, "Select File", "", "CSV Files (*.csv;*.txt;*.pkl;*.xlsx);;All Files (*)")
+            None,
+            "Select File",
+            "",
+            "CSV Files (*.csv;*.txt;*.pkl;*.xlsx);;All Files (*)",
+        )
         if not fileNames:
             return
         for fileName in fileNames:
             row = self.ui.table_analyze.rowCount()
             self.ui.table_analyze.insertRow(row)
-            self.ui.table_analyze.setItem(
-                row, 0, QTableWidgetItem(fileName))
+            self.ui.table_analyze.setItem(row, 0, QTableWidgetItem(fileName))
             self.ui.table_analyze.resizeColumnsToContents()
         self.ui.btn_run_analyze.setEnabled(True)
         self.ui.btn_export_analyze.setEnabled(True)
@@ -822,8 +918,9 @@ class EISTMainWindow(QMainWindow):
         self.ui.btn_set_default_ref.setEnabled(False)
 
     def delete_analyze(self):
-        selected_rows = [index.row()
-                         for index in self.ui.table_analyze.selectedIndexes()]
+        selected_rows = [
+            index.row() for index in self.ui.table_analyze.selectedIndexes()
+        ]
         rows_to_remove = sorted(list(set(selected_rows)), reverse=True)
         for row in rows_to_remove:
             self.ui.table_analyze.removeRow(row)
@@ -838,19 +935,21 @@ class EISTMainWindow(QMainWindow):
         try:
             self._analyze_data = self._run_analyze()
         except Exception as e:
-            self.ui.statusbar.showMessage(f'Error when running analysis: {e}')
+            self.ui.statusbar.showMessage(f"Error when running analysis: {e}")
 
     def export_analyze(self):
         try:
             filename, _ = QFileDialog.getSaveFileName(
-                None, "Save File", "", "Txt Files (*.txt)")
+                None, "Save File", "", "Txt Files (*.txt)"
+            )
             if not filename:
                 return
             df = np.column_stack(self._analyze_data)
-            np.savetxt(filename, df, delimiter='\t',
-                       fmt='%.6g', header='delta\ty\tT_pred')
+            np.savetxt(
+                filename, df, delimiter="\t", fmt="%.6g", header="delta\ty\tT_pred"
+            )
         except Exception as e:
-            self.ui.statusbar.showMessage(f'Error when saving results: {e}')
+            self.ui.statusbar.showMessage(f"Error when saving results: {e}")
 
     def set_default_ref(self):
         rows = self.ui.table_analyze.rowCount()
@@ -859,18 +958,17 @@ class EISTMainWindow(QMainWindow):
                 val_ref = float(self.ui.table_analyze.item(0, 2).text())
                 T_ref = float(self.ui.table_analyze.item(0, 3).text())
             except Exception as e:
-                self.ui.statusbar.showMessage(f'Error when set default: {e}')
+                self.ui.statusbar.showMessage(f"Error when set default: {e}")
                 return
             for i in range(rows):
-                self.ui.table_analyze.setItem(
-                    i, 2, QTableWidgetItem(f"{val_ref}"))
-                self.ui.table_analyze.setItem(
-                    i, 3, QTableWidgetItem(f"{T_ref}"))
+                self.ui.table_analyze.setItem(i, 2, QTableWidgetItem(f"{val_ref}"))
+                self.ui.table_analyze.setItem(i, 3, QTableWidgetItem(f"{T_ref}"))
         self.ui.table_analyze.resizeColumnsToContents()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = QApplication([])
+    app.setWindowIcon(QIcon("logo.png"))
     window = EISTMainWindow()
     window.show()
     app.exec_()
