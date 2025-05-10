@@ -22,7 +22,7 @@ A desktop application for electrochemical impedance spectroscopy (EIS) data anal
    - Python 3.7+ 
    - Required packages:
      ```bash
-     pip install pyqt5 numpy matplotlib scipy statsmodels pandas pickle5
+     pip install pyqt5 numpy matplotlib scipy statsmodels pandas pickle
      ```
 
 2. **Download**:
