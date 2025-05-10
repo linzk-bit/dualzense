@@ -69,10 +69,25 @@ A desktop application for electrochemical impedance spectroscopy (EIS) data anal
 - `EIST.py`: Main application logic (PyQt5-based GUI)
 - `mainwindow_ui.py`: Auto-generated UI layout (Qt Designer)
 
-## License
 
-MIT License. See `LICENSE` for details.
+## Copyright Notice
+### DualZense: Dual-frequency Impedance Sensing for Temperature Evaluation  
+**Copyright (c) <2025> <linzk-bit>**  
+
+### License
+This software is licensed under the [MIT License](LICENSE).  
+
+## Third-Party Libraries
+This project uses open-source components:  
+- [PyQt5](https://www.riverbankcomputing.com/) Copyright © Riverbank Computing Limited  
+- [NumPy](https://numpy.org/) Copyright © NumPy Developers  
+- [SciPy](https://www.scipy.org/) Copyright © SciPy Developers  
+- [Matplotlib](https://matplotlib.org/) Copyright © Matplotlib Development Team  
+- [Pandas](https://pandas.pydata.org/) Copyright © Pandas Developers  
+- [statsmodels](https://www.statsmodels.org/) Copyright © statsmodels Developers  
+
 
 ## Support
 
 For issues/questions, please [open an issue](https://github.com/linzk-bit/dualzense/issues).
+Or send an emails to lzkjack@qq.com
