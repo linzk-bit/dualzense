@@ -90,4 +90,4 @@ This project uses open-source components:
 ## Support
 
 For issues/questions, please [open an issue](https://github.com/linzk-bit/dualzense/issues).
-Or send an emails to lzkjack@qq.com
+Or send emails to lzkjack@qq.com
