@@ -77,7 +77,7 @@ A desktop application for electrochemical impedance spectroscopy (EIS) data anal
 ### License
 This software is licensed under the [MIT License](LICENSE).  
 
-## Third-Party Libraries
+### Third-Party Libraries
 This project uses open-source components:  
 - [PyQt5](https://www.riverbankcomputing.com/) Copyright © Riverbank Computing Limited  
 - [NumPy](https://numpy.org/) Copyright © NumPy Developers  
